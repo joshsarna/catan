@@ -4,11 +4,32 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      message: "Welcome to Vue.js!"
+      message: "Welcome to Vue.js!",
+      gameToJoin: ''
     };
   },
   created: function() {},
-  methods: {},
+  methods: {
+    createGame: () => {
+      axios.post('/api/games',
+        {
+          current_turn: 0,
+          current_has_rolled: false,
+          last_roll: null
+        }
+      ).then((response) => {
+        router.push('/games/' + response.data.id);
+      });
+    },
+
+    joinGame: function() {
+      axios.post('/api/players',
+        { game_id: this.gameToJoin }
+      ).then((response) => {
+        router.push('/games/' + this.gameToJoin);
+      });
+    }
+  },
   computed: {}
 };
 
@@ -87,12 +108,44 @@ var LogoutPage = {
   }
 };
 
+var GameShowPage = {
+  template: "#game-show-page",
+  data: function() {
+    return {
+      game: {
+        id: '',
+        current_user_turn: false,
+        current_has_rolled: false,
+        last_roll: null,
+        players: [],
+        hand: {
+          id: '',
+          wood_count: 0,
+          rock_count: 0,
+          wheat_count: 0,
+          sheep_count: 0,
+          brick_count: 0,
+          development_cards: []
+        }
+      }
+    };
+  },
+  created: function() {
+    let game = axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+      this.game = response.data;
+    });
+  },
+  methods: {},
+  computed: {}
+};
+
 var router = new VueRouter({
   routes: [
     { path: "/", component: HomePage },
     { path: "/signup", component: SignupPage },
     { path: "/login", component: LoginPage },
-    { path: "/logout", component: LogoutPage }
+    { path: "/logout", component: LogoutPage },
+    { path: "/games/:id", component: GameShowPage }
   ],
   scrollBehavior: function(to, from, savedPosition) {
     return { x: 0, y: 0 };

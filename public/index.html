@@ -23,6 +23,11 @@
   <div class="vue-component">
 
     <h1>{{ message }}</h1>
+    <button v-on:click="createGame">NEW GAME</button>
+    <div>
+      <input type="text" class="form-control" v-model="gameToJoin" />
+      <button v-on:click="joinGame">Join GAME</button>
+    </div>
 
   </div>
 </template>
@@ -74,6 +79,17 @@
         <input type="password" class="form-control" v-model="password">
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
+    </div>
+
+  </div>
+</template>
+
+<template id="game-show-page">
+  <div class="vue-component">
+
+    <div class="container">
+      <h1>GAME</h1>
+      <div>{{ game }}</div>
     </div>
 
   </div>

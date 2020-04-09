@@ -1,4 +1,4 @@
-RedBook::red_book
+# RedBook::red_book
 Rails.application.routes.draw do
   namespace :api do
     post '/users' => 'users#create'
@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     get '/games/:id' => 'games#show'
     patch '/games/:id' => 'games#update'
     patch '/games/:id/roll' => 'games#roll'
+    patch '/games/:id/next' => 'games#next'
 
     post '/players' => 'players#create'
 

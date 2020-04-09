@@ -14,4 +14,8 @@ class Game < ApplicationRecord
 
     return available_cards.sample
   end
+
+  def current_user_turn(current_user)
+    return current_turn == players.find_by({user_id: current_user.id}).turn_number
+  end
 end
