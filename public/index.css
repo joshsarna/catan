@@ -40,6 +40,14 @@ body {
   color: white;
 }
 
+.nav-bar-title {
+  float: left;
+  height: 40px;
+  margin: 13px 5px 13px 13px;
+  color: white;
+  font-size: 40px
+}
+
 .button-link {
   text-decoration: none;
   color: black;
