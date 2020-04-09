@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
     patch '/hands/:id' => 'hands#update'
 
+    post '/development_card_hands' => 'development_card_hands#draw'
+    patch '/development_card_hands/:id' => 'development_card_hands#update'
+
     post '/users' => 'users#create'
     post '/sessions' => 'sessions#create'
   end
