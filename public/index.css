@@ -1,6 +1,11 @@
-.hand {
+.flex {
   display: flex;
   margin: 5px 0px 25px 0px;
+}
+
+.flex-item {
+  flex-grow: 1;
+  text-align: center;
 }
 
 .card {

@@ -31,10 +31,16 @@
   <div class="vue-component">
 
     <h1>Welcome to Settlers of Catan</h1>
-    <button v-on:click="createGame">NEW GAME</button>
-    <div>
-      <input type="text" class="form-control" v-model="gameToJoin" />
-      <button v-on:click="joinGame">Join GAME</button>
+    <div class="flex">
+      <div class="flex-item">
+        <h4>Start a New Game</h4>
+        <button v-on:click="createGame">New Game</button>
+      </div>
+      <div class="flex-item">
+        <h4>Join an Existing Game</h4>
+        <div>Game Code: <input type="text" class="form-control" v-model="gameToJoin" /></div>
+        <button v-on:click="joinGame">Join Game</button>
+      </div>
     </div>
 
   </div>
@@ -115,15 +121,15 @@
         <button v-on:click="endTurn">End Turn</button>
       </div>
 
-      <h3>Your Hand</h3>
-      <div class="hand">
+      <h3>Your Hand ({{ cardTotal }} Card{{ cardTotal !== 1 ? 's' : ''}})</h3>
+      <div class="flex">
         <div class="card">
           <img class="card-img-top" src="images/woodCard.jpg" alt="Card image cap">
           <div class="card-body">
             <h4>Wood</h4>
             <p class="card-text">{{ game.hand.wood_count }}</p>
             <button v-on:click="changeHand('wood', true)">+</button>
-            <button v-on:click="changeHand('wood', false)">-</button>
+            <button v-if="game.hand.wood_count > 0" v-on:click="changeHand('wood', false)">-</button>
           </div>
         </div>
 
@@ -133,7 +139,7 @@
             <h4>Brick</h4>
             <p class="card-text">{{ game.hand.brick_count }}</p>
             <button v-on:click="changeHand('brick', true)">+</button>
-            <button v-on:click="changeHand('brick', false)">-</button>
+            <button v-if="game.hand.brick_count > 0" v-on:click="changeHand('brick', false)">-</button>
           </div>
         </div>
 
@@ -143,7 +149,7 @@
             <h4>Wheat</h4>
             <p class="card-text">{{ game.hand.wheat_count }}</p>
             <button v-on:click="changeHand('wheat', true)">+</button>
-            <button v-on:click="changeHand('wheat', false)">-</button>
+            <button v-if="game.hand.wheat_count > 0" v-on:click="changeHand('wheat', false)">-</button>
           </div>
         </div>
 
@@ -153,7 +159,7 @@
             <h4>Sheep</h4>
             <p class="card-text">{{ game.hand.sheep_count }}</p>
             <button v-on:click="changeHand('sheep', true)">+</button>
-            <button v-on:click="changeHand('sheep', false)">-</button>
+            <button v-if="game.hand.sheep_count > 0" v-on:click="changeHand('sheep', false)">-</button>
           </div>
         </div>
 
@@ -163,7 +169,7 @@
             <h4>Rock</h4>
             <p class="card-text">{{ game.hand.rock_count }}</p>
             <button v-on:click="changeHand('rock', true)">+</button>
-            <button v-on:click="changeHand('rock', false)">-</button>
+            <button v-if="game.hand.rock_count > 0" v-on:click="changeHand('rock', false)">-</button>
           </div>
         </div>
       </div> <!-- /hand -->

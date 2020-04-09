@@ -9,7 +9,9 @@ var HomePage = {
   },
   created: function() {
     let jwt = localStorage.getItem('jwt');
-    if (!jwt) {
+    if (jwt && jwt !== 'undefined') {
+      axios.defaults.headers.common["Authorization"] = jwt;
+    } else {
       router.push('/signup');
     }
   },
@@ -137,10 +139,12 @@ var GameShowPage = {
 
   created: function() {
     let jwt = localStorage.getItem('jwt');
-    if (!jwt) {
+    if (jwt) {
+      axios.defaults.headers.common["Authorization"] = jwt;
+    } else {
       router.push('/signup');
     }
-    
+
     axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
       this.game = response.data;
     });
@@ -264,6 +268,13 @@ var GameShowPage = {
       return this.game.hand.wheat_count >= 1 &&
         this.game.hand.rock_count >= 1 &&
         this.game.hand.sheep_count >= 1;
+    },
+    cardTotal: function() {
+      return (this.game.hand.wood_count || 0) +
+        (this.game.hand.brick_count || 0) +
+        (this.game.hand.wheat_count || 0) +
+        (this.game.hand.sheep_count || 0) +
+        (this.game.hand.rock_count || 0);
     }
   }
 };
