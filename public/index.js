@@ -136,11 +136,11 @@ var GameShowPage = {
       this.game = response.data;
     });
 
-    // setInterval(() => {
-    //   axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
-    //     this.game = response.data;
-    //   });
-    // }, 1000);
+    setInterval(() => {
+      axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+        this.game = response.data;
+      });
+    }, 1000);
   },
 
   methods: {
