@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     post '/players' => 'players#create'
 
     patch '/hands/:id' => 'hands#update'
+    patch '/hands/:id/steal' => 'hands#steal'
 
     post '/development_card_hands' => 'development_card_hands#draw'
     patch '/development_card_hands/:id' => 'development_card_hands#update'

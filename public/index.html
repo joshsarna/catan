@@ -124,6 +124,14 @@
         <button v-if="canBuyCity" v-on:click="buyCity">Buy City</button>
         <button v-if="canBuyDevelopmentCard" v-on:click="buyDevelopmentCard">Buy Development Card</button>
         <button v-on:click="endTurn">End Turn</button>
+        <div v-if="canSteal">
+          <h4>Steal From an Opponent</h4>
+          <div class="flex">
+            <div v-for="player in game.other_players">
+              <button v-on:click="stealFrom(player.hand_id)">Steal from {{player.name}}</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <h3>Your Hand ({{ cardTotal }} Card{{ cardTotal !== 1 ? 's' : ''}})</h3>
@@ -186,7 +194,7 @@
           <div class="card-body">
             <h4>{{developmentCard.name}}</h4>
             <p class="card-text">{{ developmentCard.face_up ? 'Face Up' : 'Face Down' }}</p>
-              <p class="card-text" v-if="!developmentCard.face_up" v-on:click="flipDevelopmentCard(developmentCard.id)"><button>Use Development Card</button></p>
+              <p class="card-text" v-if="!developmentCard.face_up" v-on:click="flipDevelopmentCard(developmentCard)"><button>Use Development Card</button></p>
           </div>
         </div>
       </div>

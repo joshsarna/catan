@@ -35,4 +35,8 @@ class User < ApplicationRecord
       }
     }
   end
+
+  def hand_for_game(game_id)
+    return hands.find_by(game_id: game_id)
+  end
 end

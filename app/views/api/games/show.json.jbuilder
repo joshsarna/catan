@@ -6,6 +6,7 @@ json.last_roll @game.last_roll
 json.other_players (@game.users.select { |user| user.id != current_user.id }) { |user|
   json.name user.name
   json.development_cards user.face_up_development_cards(@game.id)
+  json.hand_id user.hand_for_game(@game.id).id
 }
 
 json.hand current_user.current_game_hand(@game.id)

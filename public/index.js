@@ -133,7 +133,8 @@ var GameShowPage = {
           brick_count: 0,
           development_cards: []
         }
-      }
+      },
+      canSteal: false
     };
   },
 
@@ -145,12 +146,17 @@ var GameShowPage = {
       router.push('/signup');
     }
 
-    axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+    let canSteal = localStorage.getItem('canSteal');
+    if (canSteal === 'true') {
+      this.canSteal = true;
+    }
+
+    axios.get('/api/games/' + this.$route.params.id).then((response) => {
       this.game = response.data;
     });
 
     setInterval(() => {
-      axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+      axios.get('/api/games/' + this.game.id).then((response) => {
         this.game = response.data;
       });
     }, 1000);
@@ -160,6 +166,10 @@ var GameShowPage = {
     roll: function() {
       let roll = axios.patch(`/api/games/${this.game.id}/roll`, {}).then((response) => {
         this.game = response.data;
+        if (response.data.last_roll === 7) {
+          this.canSteal = true;
+          localStorage.setItem('canSteal', 'true');
+        }
       });
     },
 
@@ -226,17 +236,33 @@ var GameShowPage = {
         hand_id: this.game.hand.id
       };
       axios.post('/api/development_card_hands', params).then((response) => {
-        axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+        axios.get('/api/games/' + this.game.id).then((response) => {
           this.game = response.data;
         });
       });
     },
 
-    flipDevelopmentCard: function(id) {
-      axios.patch('/api/development_card_hands/' + id,
+    flipDevelopmentCard: function(developmentCard) {
+      if (developmentCard.name === 'KNIGHT') {
+        this.canSteal = true;
+        localStorage.setItem('canSteal', 'true');
+      }
+      axios.patch('/api/development_card_hands/' + developmentCard.id,
         { face_up: true }
       ).then((response) => {
-        axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
+        axios.get('/api/games/' + this.game.id).then((response) => {
+          this.game = response.data;
+        });
+      });
+    },
+
+    stealFrom: function(handId) {
+      axios.patch(`/api/hands/${this.game.hand.id}/steal`,
+        {opponent_hand_id: handId}
+      ).then((response) => {
+        this.canSteal = false;
+        localStorage.setItem('canSteal', 'false');
+        axios.get('/api/games/' + this.game.id).then((response) => {
           this.game = response.data;
         });
       });
