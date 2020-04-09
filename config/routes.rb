@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get '/games/:id' => 'games#show'
     patch '/games/:id' => 'games#update'
 
+    patch '/hands/:id' => 'hands#update'
+
     post '/users' => 'users#create'
     post '/sessions' => 'sessions#create'
   end

@@ -9,6 +9,7 @@ class User < ApplicationRecord
     hand = hands.find_by(game_id: game_id)
     development_cards = hand.development_card_hands
     face_up_development_cards = development_cards.where(face_up: true)
+    
     return face_up_development_cards.map do |development_card_in_hand|
       development_card_in_hand.development_card
     end
@@ -16,7 +17,9 @@ class User < ApplicationRecord
 
   def current_game_hand(game_id)
     hand = hands.find_by(game_id: game_id)
+
     return {
+      id: hand.id,
       wood_count: hand.wood_count,
       rock_count: hand.rock_count,
       wheat_count: hand.wheat_count,
@@ -24,6 +27,7 @@ class User < ApplicationRecord
       brick_count: hand.brick_count,
       development_cards: hand.development_card_hands.map { |development_card_hand|
         {
+          id: development_card_hand.id,
           name: development_card_hand.development_card.name,
           image_url: development_card_hand.development_card.image_url,
           face_up: development_card_hand.face_up
