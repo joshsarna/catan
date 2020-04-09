@@ -25,4 +25,17 @@ class Api::GamesController < ApplicationController
       render 'show.json.jbuilder'
     end
   end
+
+  def roll
+    @game = Game.find(params[:id])
+    die1 = rand(6) + 1
+    die2 = rand(6) + 1
+
+    @game.current_has_rolled = true
+    @game.last_roll = die1 + die2
+
+    if @game.save
+      render 'show.json.jbuilder'
+    end
+  end
 end
