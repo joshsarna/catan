@@ -6,6 +6,7 @@ class Api::HandsController < ApplicationController
     @hand.wheat_count = params[:wheat_count] || @hand.wheat_count
     @hand.sheep_count = params[:sheep_count] || @hand.sheep_count
     @hand.brick_count = params[:brick_count] || @hand.brick_count
+    p @hand
 
     if (@hand.save)
       render 'show.json.jbuilder'

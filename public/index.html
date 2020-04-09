@@ -8,10 +8,10 @@
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
   <link rel="stylesheet" type="text/css" href="index.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
 </head>
 <body>
   <div id="vue-app">
@@ -93,53 +93,91 @@
   <div class="vue-component">
 
     <div class="container">
-      <h1>GAME</h1>
+      <h1>Settlers of Catan</h1>
       <div v-if="game.current_user_turn">
         <h3>It's Your Turn</h3>
         <div v-if="game.current_has_rolled">Your Roll: {{ game.last_roll }}</div>
         <div v-else><button v-on:click="roll">Roll</button></div>
+        <button v-if="canBuyRoad" v-on:click="buyRoad">Buy Road</button>
+        <button v-if="canBuySettlement" v-on:click="buySettlement">Buy Settlement</button>
+        <button v-if="canBuyCity" v-on:click="buyCity">Buy City</button>
+        <button v-if="canBuyDevelopmentCard" v-on:click="buyDevelopmentCard">Buy Development Card</button>
+        <button v-on:click="endTurn">End Turn</button>
       </div>
-      <div>{{ game }}</div>
 
       <h3>Your Hand</h3>
       <div class="hand">
-        <div class="card" style="width: 12rem;">
+        <div class="card">
           <img class="card-img-top" src="images/woodCard.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Wood</h5>
+            <h4>Wood</h4>
             <p class="card-text">{{ game.hand.wood_count }}</p>
+            <button v-on:click="changeHand('wood', true)">+</button>
+            <button v-on:click="changeHand('wood', false)">-</button>
           </div>
         </div>
 
         <div class="card" style="width: 12rem;">
           <img class="card-img-top" src="images/brickCard.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Brick</h5>
+            <h4>Brick</h4>
             <p class="card-text">{{ game.hand.brick_count }}</p>
+            <button v-on:click="changeHand('brick', true)">+</button>
+            <button v-on:click="changeHand('brick', false)">-</button>
           </div>
         </div>
 
         <div class="card" style="width: 12rem;">
           <img class="card-img-top" src="images/wheatCard.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Wheat</h5>
+            <h4>Wheat</h4>
             <p class="card-text">{{ game.hand.wheat_count }}</p>
+            <button v-on:click="changeHand('wheat', true)">+</button>
+            <button v-on:click="changeHand('wheat', false)">-</button>
           </div>
         </div>
 
         <div class="card" style="width: 12rem;">
           <img class="card-img-top" src="images/sheepCard.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Sheep</h5>
+            <h4>Sheep</h4>
             <p class="card-text">{{ game.hand.sheep_count }}</p>
+            <button v-on:click="changeHand('sheep', true)">+</button>
+            <button v-on:click="changeHand('sheep', false)">-</button>
           </div>
         </div>
 
         <div class="card" style="width: 12rem;">
           <img class="card-img-top" src="images/rockCard.jpg" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Rock</h5>
+            <h4>Rock</h4>
             <p class="card-text">{{ game.hand.rock_count }}</p>
+            <button v-on:click="changeHand('rock', true)">+</button>
+            <button v-on:click="changeHand('rock', false)">-</button>
+          </div>
+        </div>
+      </div> <!-- /hand -->
+
+      <h3>Your Development Cards</h3>
+      <div v-for="developmentCard in game.hand.development_cards">
+        <div class="card" style="width: 12rem;">
+          <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
+          <div class="card-body">
+            <h4>{{developmentCard.name}}</h4>
+            <p class="card-text">{{ developmentCard.face_up ? 'Face Up' : 'Face Down' }}</p>
+              <p class="card-text" v-if="!developmentCard.face_up" v-on:click="flipDevelopmentCard(developmentCard.id)"><button>Use Development Card</button></p>
+          </div>
+        </div>
+      </div>
+
+      <div v-for="player in game.other_players">
+        <h3>{{player.name}}'s Development Cards</h3>
+        <div v-for="developmentCard in player.development_cards">
+          <div class="card" style="width: 12rem;">
+            <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
+            <div class="card-body">
+              <h4>{{developmentCard.name}}</h4>
+            </div>
           </div>
         </div>
       </div>
