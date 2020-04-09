@@ -135,7 +135,13 @@ var GameShowPage = {
       this.game = response.data;
     });
   },
-  methods: {},
+  methods: {
+    roll: function() {
+      let roll = axios.patch(`/api/games/${this.game.id}/roll`, {}).then((response) => {
+        this.game = response.data;
+      });
+    }
+  },
   computed: {}
 };
 
