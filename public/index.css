@@ -20,5 +20,26 @@
 }
 
 body {
-  padding: 25px 75px;
+  padding: 0px 75px;
+}
+
+.links {
+  padding: 25px;
+  background-color: gray;
+  text-align: right;
+}
+
+.link {
+  margin-right: 50px;
+  text-decoration: none;
+  color: white;
+}
+
+.button-link {
+  text-decoration: none;
+  color: black;
+}
+
+.space-above {
+  margin-top: 25px;
 }

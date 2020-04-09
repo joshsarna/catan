@@ -4,11 +4,15 @@ var HomePage = {
   template: "#home-page",
   data: function() {
     return {
-      message: "Welcome to Vue.js!",
       gameToJoin: ''
     };
   },
-  created: function() {},
+  created: function() {
+    let jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      router.push('/signup');
+    }
+  },
   methods: {
     createGame: () => {
       axios.post('/api/games',
@@ -132,6 +136,11 @@ var GameShowPage = {
   },
 
   created: function() {
+    let jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+      router.push('/signup');
+    }
+    
     axios.get('/api/games/' +  + this.$route.params.id).then((response) => {
       this.game = response.data;
     });

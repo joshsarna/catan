@@ -15,9 +15,12 @@
 </head>
 <body>
   <div id="vue-app">
-    <a href="/#/signup">Signup</a>
-    <a href="/#/login">Login</a>
-    <a href="/#/logout">Logout</a>
+    <div class="links">
+      <a href="/#/signup" class="link">Sign Up</a>
+      <a href="/#/login" class="link">Log In</a>
+      <a href="/#/logout" class="link">Log Out</a>
+      <a href="/#/" class="link">Home</a>
+    </div>
     <router-view></router-view>
 
   </div>
@@ -27,7 +30,7 @@
 <template id="home-page">
   <div class="vue-component">
 
-    <h1>{{ message }}</h1>
+    <h1>Welcome to Settlers of Catan</h1>
     <button v-on:click="createGame">NEW GAME</button>
     <div>
       <input type="text" class="form-control" v-model="gameToJoin" />
@@ -41,7 +44,7 @@
   <div class="vue-component">
 
     <div class="container">
-      <h1>Signup</h1>
+      <h1>Sign Up</h1>
       <ul>
         <li class="text-danger" v-for="error in errors">{{ error }}</li>
       </ul>
@@ -62,6 +65,13 @@
         <input type="password" class="form-control" v-model="passwordConfirmation">
       </div>
       <button class="btn btn-primary" v-on:click="submit()">Submit</button>
+
+      <div class="space-above">
+        Already have an account?
+        <button>
+          <a href='/#/login' class='button-link'>Log In</a>
+        </button>
+      </div>
     </div>
 
   </div>
@@ -71,7 +81,7 @@
   <div class="vue-component">
 
     <div class="container">
-      <h1>Login</h1>
+      <h1>Log In</h1>
       <ul>
         <li class="text-danger" v-for="error in errors">{{ error }}</li>
       </ul>
