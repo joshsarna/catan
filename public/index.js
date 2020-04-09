@@ -134,7 +134,8 @@ var GameShowPage = {
           development_cards: []
         }
       },
-      canSteal: false
+      canSteal: false,
+      pollId: null
     };
   },
 
@@ -155,11 +156,15 @@ var GameShowPage = {
       this.game = response.data;
     });
 
-    setInterval(() => {
+    this.pollId = setInterval(() => {
       axios.get('/api/games/' + this.game.id).then((response) => {
         this.game = response.data;
       });
     }, 1000);
+  },
+
+  beforeDestroy: function() {
+    clearInterval(this.pollId);
   },
 
   methods: {
