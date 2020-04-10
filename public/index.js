@@ -210,10 +210,10 @@ var GameShowPage = {
     buySettlement: function() {
       let params = {
         wood_count: this.game.hand.wood_count - 1,
-        rock_count: this.game.hand.rock_count - 1,
         wheat_count: this.game.hand.wheat_count - 1,
         sheep_count: this.game.hand.sheep_count - 1,
-        brick_count: this.game.hand.brick_count
+        brick_count: this.game.hand.brick_count - 1,
+        rock_count: this.game.hand.rock_count
       };
 
       axios.patch('/api/hands/' + this.game.hand.id, params).then((response) => {
@@ -224,10 +224,10 @@ var GameShowPage = {
     buyCity: function() {
       let params = {
         wood_count: this.game.hand.wood_count,
-        rock_count: this.game.hand.rock_count,
         wheat_count: this.game.hand.wheat_count - 2,
         sheep_count: this.game.hand.sheep_count,
-        brick_count: this.game.hand.brick_count - 3
+        brick_count: this.game.hand.brick_count,
+        rock_count: this.game.hand.rock_count - 3
       };
 
       axios.patch('/api/hands/' + this.game.hand.id, params).then((response) => {
