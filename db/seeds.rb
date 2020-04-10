@@ -1,8 +1,8 @@
-Game.destroy_all
-User.destroy_all
-Player.destroy_all
-Hand.destroy_all
-DevelopmentCardHand.destroy_all
+# Game.destroy_all
+# User.destroy_all
+# Player.destroy_all
+# Hand.destroy_all
+# DevelopmentCardHand.destroy_all
 
 DevelopmentCard.destroy_all
 
