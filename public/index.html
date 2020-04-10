@@ -199,27 +199,37 @@
             <button v-if="game.hand.rock_count > 0" v-on:click="changeHand('rock', false)">-</button>
           </div>
         </div>
+
+        <div class="names">
+          <h3>Players</h3>
+          <div>{{ game.name }} (you)</div>
+          <div v-for="player in game.other_players">{{ player.name }}</div>
+        </div>
       </div> <!-- /hand -->
 
       <h3>Your Development Cards</h3>
-      <div v-for="developmentCard in game.hand.development_cards">
-        <div class="card" style="width: 12rem;">
-          <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
-          <div class="card-body">
-            <h4>{{developmentCard.name}}</h4>
-            <p class="card-text">{{ developmentCard.face_up ? 'Face Up' : 'Face Down' }}</p>
-              <p class="card-text" v-if="!developmentCard.face_up" v-on:click="flipDevelopmentCard(developmentCard)"><button>Use Development Card</button></p>
+      <div class="flex">
+        <div v-for="developmentCard in game.hand.development_cards">
+          <div class="card" style="width: 12rem;">
+            <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
+            <div class="card-body">
+              <h4>{{developmentCard.name}}</h4>
+              <p class="card-text">{{ developmentCard.face_up ? 'Face Up' : 'Face Down' }}</p>
+                <p class="card-text" v-if="!developmentCard.face_up" v-on:click="flipDevelopmentCard(developmentCard)"><button>Use Development Card</button></p>
+            </div>
           </div>
         </div>
       </div>
 
       <div v-for="player in game.other_players">
         <h3>{{player.name}}'s Development Cards</h3>
-        <div v-for="developmentCard in player.development_cards">
-          <div class="card" style="width: 12rem;">
-            <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
-            <div class="card-body">
-              <h4>{{developmentCard.name}}</h4>
+        <div class="flex">
+          <div v-for="developmentCard in player.development_cards">
+            <div class="card" style="width: 12rem;">
+              <img class="card-img-top" v-bind:src="developmentCard.image_url" alt="Card image cap">
+              <div class="card-body">
+                <h4>{{developmentCard.name}}</h4>
+              </div>
             </div>
           </div>
         </div>

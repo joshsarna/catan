@@ -132,7 +132,8 @@ var GameShowPage = {
           sheep_count: 0,
           brick_count: 0,
           development_cards: []
-        }
+        },
+        name: ''
       },
       canSteal: false,
       pollId: null

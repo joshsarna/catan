@@ -11,3 +11,4 @@ json.other_players (@game.players.select { |player| player.user.id != current_us
 }
 
 json.hand current_user.current_game_hand(@game.id)
+json.name current_user.name

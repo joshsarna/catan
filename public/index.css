@@ -15,6 +15,12 @@
   margin: 5px;
 }
 
+.names {
+  text-align: center;
+  width: 12rem;
+  margin: 5px;
+}
+
 .card-img-top {
   width: 100%;
 }
