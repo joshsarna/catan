@@ -123,7 +123,7 @@ var GameShowPage = {
         current_user_turn: false,
         current_has_rolled: false,
         last_roll: null,
-        players: [],
+        other_players: [],
         hand: {
           id: '',
           wood_count: 0,
@@ -276,6 +276,7 @@ var GameShowPage = {
     endTurn: function() {
       axios.patch(`/api/games/${this.game.id}/next`, {}).then((response) => {
         this.game = response.data;
+        this.canSteal = false;
       });
     }
   },
@@ -306,6 +307,10 @@ var GameShowPage = {
         (this.game.hand.wheat_count || 0) +
         (this.game.hand.sheep_count || 0) +
         (this.game.hand.rock_count || 0);
+    },
+    currentTurnName: function() {
+      let player = this.game.other_players.find((player) => player.turn);
+      return player ? player.name : 'Other Player';
     }
   }
 };
