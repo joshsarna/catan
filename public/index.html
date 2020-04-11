@@ -128,7 +128,7 @@
         <button v-if="canBuySettlement" v-on:click="buySettlement">Buy Settlement</button>
         <button v-if="canBuyCity" v-on:click="buyCity">Buy City</button>
         <button v-if="canBuyDevelopmentCard" v-on:click="buyDevelopmentCard">Buy Development Card</button>
-        <button v-on:click="endTurn">End Turn</button>
+        <button v-on:click="endTurn" v-if="game.current_has_rolled">End Turn</button>
         <div v-if="canSteal">
           <h4>Steal From an Opponent</h4>
           <div class="flex">
