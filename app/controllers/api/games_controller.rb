@@ -57,6 +57,9 @@ class Api::GamesController < ApplicationController
 
   def next
     @game = Game.find(params[:id])
+    if !@game.current_has_rolled
+      render 'show.json.jbuilder'
+    end
     if @game.current_turn + 1 == @game.players.length
       @game.current_turn = 0
     else
