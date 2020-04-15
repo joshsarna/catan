@@ -24,6 +24,7 @@ var HomePage = {
           last_roll: null
         }
       ).then((response) => {
+        localStorage.setItem('canSteal', 'false');
         router.push('/games/' + response.data.id);
       });
     },

@@ -63,3 +63,8 @@ body {
 .space-above {
   margin-top: 25px;
 }
+
+.subtext {
+  color: gray;
+  font-size: smaller;
+}

@@ -114,37 +114,44 @@
   <div class="vue-component">
 
     <div class="container">
-      <h1>Settlers of Catan</h1>
-      <div v-if="game.current_user_turn">
-        <h3>It's Your Turn</h3>
-        <div v-if="game.current_has_rolled">
-          <h4>Your Roll: {{ game.last_roll }}</h4>
-        </div>
-        <div v-else>
-          <button v-on:click="roll">Roll</button>
-          <span v-if="game.last_roll">Last Roll: {{ game.last_roll }}</span>
-        </div>
-        <button v-if="canBuyRoad" v-on:click="buyRoad">Buy Road</button>
-        <button v-if="canBuySettlement" v-on:click="buySettlement">Buy Settlement</button>
-        <button v-if="canBuyCity" v-on:click="buyCity">Buy City</button>
-        <button v-if="canBuyDevelopmentCard" v-on:click="buyDevelopmentCard">Buy Development Card</button>
-        <button v-on:click="endTurn" v-if="game.current_has_rolled">End Turn</button>
-        <div v-if="canSteal">
-          <h4>Steal From an Opponent</h4>
-          <div class="flex">
-            <div v-for="player in game.other_players">
-              <button v-on:click="stealFrom(player.hand_id)">Steal from {{player.name}}</button>
+      <div class="flex">
+        <div>
+          <h1>Settlers of Catan <span class="subtext">(Game Code: {{ game.id }})</span></h1>
+          <div v-if="game.current_user_turn">
+            <h3>It's Your Turn</h3>
+            <div v-if="game.current_has_rolled">
+              <h4>Your Roll: {{ game.last_roll }}</h4>
+            </div>
+            <div v-else>
+              <button v-on:click="roll">Roll</button>
+              <span v-if="game.last_roll">Last Roll: {{ game.last_roll }}</span>
+            </div>
+            <button v-if="canBuyRoad" v-on:click="buyRoad">Buy Road</button>
+            <button v-if="canBuySettlement" v-on:click="buySettlement">Buy Settlement</button>
+            <button v-if="canBuyCity" v-on:click="buyCity">Buy City</button>
+            <button v-if="canBuyDevelopmentCard" v-on:click="buyDevelopmentCard">Buy Development Card</button>
+            <button v-on:click="endTurn" v-if="game.current_has_rolled">End Turn</button>
+            <div v-if="canSteal">
+              <h4>Steal From an Opponent</h4>
+              <div class="flex">
+                <div v-for="player in game.other_players">
+                  <button v-on:click="stealFrom(player.hand_id)">Steal from {{player.name}}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <h3>It's {{ currentTurnName }}'s Turn</h3>
+            <div v-if="game.current_has_rolled">
+              <h4>{{ currentTurnName }}'s Roll: {{ game.last_roll }}</h4>
+            </div>
+            <div v-else>
+              <span v-if="game.last_roll">Last Roll: {{ game.last_roll }}</span>
             </div>
           </div>
         </div>
-      </div>
-      <div v-else>
-        <h3>It's {{ currentTurnName }}'s Turn</h3>
-        <div v-if="game.current_has_rolled">
-          <h4>{{ currentTurnName }}'s Roll: {{ game.last_roll }}</h4>
-        </div>
-        <div v-else>
-          <span v-if="game.last_roll">Last Roll: {{ game.last_roll }}</span>
+        <div class="flex-item space-above">
+          <img src="images/buildingCosts.jpg">
         </div>
       </div>
 
